@@ -2,10 +2,10 @@
 
 namespace DiscoveryMusic
 {
-	inline static RE::BSFixedString Generic{ "MUSDiscoveryGeneric"sv };
-	inline static RE::BSFixedString City{ "MUSDiscoveryCity"sv };
-	inline static RE::BSFixedString Town{ "MUSDiscoveryTown"sv };
-	inline static RE::BSFixedString Dungeon{ "MUSDiscoveryDungeon"sv };
+	inline static constexpr std::string_view Generic{ "MUSDiscoveryGeneric"sv };
+	inline static constexpr std::string_view City{ "MUSDiscoveryCity"sv };
+	inline static constexpr std::string_view Town{ "MUSDiscoveryTown"sv };
+	inline static constexpr std::string_view Dungeon{ "MUSDiscoveryDungeon"sv };
 }
 
 class DiscoveryMusicManager
