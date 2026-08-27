@@ -89,7 +89,14 @@ bool Patch::WriteLocalMapPatch(
 {
 	auto& trampoline = SKSE::GetTrampoline();
 
-	auto door_hook = REL::Relocation<std::uintptr_t>{ Offset::LocalMapMenu::PopulateData, 0x941 };
+	std::ptrdiff_t offset;
+	if (REL::Module::get().version() >= SKSE::RUNTIME_1_7_99) {
+		offset = 0x95D;
+	}
+	else {
+		offset = 0x941;
+	}
+	auto door_hook = REL::Relocation<std::uintptr_t>{ Offset::LocalMapMenu::PopulateData, offset };
 
 	constexpr auto relcall = REL::make_pattern<"E8">();
 

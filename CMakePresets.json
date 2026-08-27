@@ -32,32 +32,26 @@
       "cacheVariables": {
         "CMAKE_MSVC_RUNTIME_LIBRARY": {
           "type": "STRING",
-          "value": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
+          "value": "MultiThreaded$<$<CONFIG:Debug>:Debug>"
         },
         "VCPKG_TARGET_TRIPLET": {
           "type": "STRING",
-          "value": "x64-windows-static-md"
+          "value": "x64-windows-static"
         }
       },
       "hidden": true,
       "name": "windows"
     },
     {
-      "architecture": {
-        "strategy": "set",
-        "value": "x64"
-      },
+      "binaryDir": "${sourceDir}/build-vr",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX"
+        "BUILD_SKYRIMVR": {
+          "type": "BOOL",
+          "value": "ON"
+        }
       },
-      "generator": "Visual Studio 16 2019",
-      "inherits": [
-        "cmake-dev",
-        "vcpkg",
-        "windows"
-      ],
-      "name": "vs2019-windows",
-      "toolset": "v142"
+      "hidden": true,
+      "name": "vr"
     },
     {
       "architecture": {
@@ -65,7 +59,8 @@
         "value": "x64"
       },
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX"
+        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX",
+        "CMAKE_CXX_FLAGS_RELEASE": "/O2 /DNDEBUG"
       },
       "generator": "Visual Studio 17 2022",
       "inherits": [
@@ -77,16 +72,36 @@
       "toolset": "v143"
     },
     {
-      "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": {
-          "type": "STRING",
-          "value": "$env{VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake"
-        }
-      },
       "inherits": [
+        "vr",
         "vs2022-windows"
       ],
-      "name": "github-workflows"
+      "name": "vs2022-windows-vr"
+    },
+    {
+      "architecture": {
+        "strategy": "set",
+        "value": "x64"
+      },
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX",
+        "CMAKE_CXX_FLAGS_RELEASE": "/O2 /DNDEBUG"
+      },
+      "generator": "Visual Studio 18 2026",
+      "inherits": [
+        "cmake-dev",
+        "vcpkg",
+        "windows"
+      ],
+      "name": "vs2026-windows",
+      "toolset": "v145"
+    },
+    {
+      "inherits": [
+        "vr",
+        "vs2026-windows"
+      ],
+      "name": "vs2026-windows-vr"
     }
   ],
   "version": 3

@@ -103,7 +103,20 @@ auto LocalMapManager::GetSpecialMarkerType(RE::SpecialMarkerData* a_data) -> RE:
 		}
 		else {
 			auto player = RE::PlayerCharacter::GetSingleton();
-			auto currentLoc = player ? player->currentLocation : nullptr;
+			RE::BGSLocation* currentLoc = nullptr;
+			if (player) {
+				if (REL::Module::get().version() >= SKSE::RUNTIME_1_7_99) {
+					currentLoc = player->currentLocation;
+				}
+				else if (REL::Module::get().version() >= SKSE::RUNTIME_1_6_629) {
+					currentLoc = *reinterpret_cast<RE::BGSLocation**>(
+						reinterpret_cast<std::byte*>(player) + 0xAD0);
+				}
+				else {
+					currentLoc = *reinterpret_cast<RE::BGSLocation**>(
+						reinterpret_cast<std::byte*>(player) + 0xAC8);
+				}
+			}
 
 			auto currentLocMarker =
 				currentLoc ? localMapManager->GetLocalMapMarker(currentLoc)
